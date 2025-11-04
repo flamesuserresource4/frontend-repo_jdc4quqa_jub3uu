@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const workshops = [
   {
@@ -41,10 +42,15 @@ const Workshops = () => {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {workshops.map((w) => (
-            <article
+          {workshops.map((w, i) => (
+            <motion.article
               key={w.title}
-              className="group relative rounded-2xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur transition hover:-translate-y-1 hover:bg-slate-900/80"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
+              whileHover={{ y: -6 }}
+              className="group relative rounded-2xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur"
             >
               <div className="flex items-center gap-4 text-sm text-white/80">
                 <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4" /> {w.date}</span>
@@ -66,7 +72,7 @@ const Workshops = () => {
               >
                 Save your spot <ChevronRight className="ml-1 h-4 w-4" />
               </a>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

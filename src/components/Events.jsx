@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const events = [
   {
@@ -34,9 +35,13 @@ const Events = () => {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {events.map((e) => (
-            <div
+          {events.map((e, i) => (
+            <motion.div
               key={e.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
               className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/70 to-slate-900/40 p-6"
             >
               <h3 className="text-lg font-semibold">{e.title}</h3>
@@ -45,11 +50,18 @@ const Events = () => {
                 <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4" /> {e.place}</span>
               </div>
               <p className="mt-3 text-sm text-white/80">{e.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <div id="join" className="mx-auto mt-14 max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur">
+        <motion.div
+          id="join"
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="mx-auto mt-14 max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur"
+        >
           <h3 className="text-xl font-semibold">Join the Club</h3>
           <p className="mt-2 text-white/80">Open to all skill levels. Weekly meetings, shared tools, and real projects.</p>
           <form className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -74,7 +86,7 @@ const Events = () => {
               Get Updates
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

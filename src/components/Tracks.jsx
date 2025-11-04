@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cpu, Wrench, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const tracks = [
   {
@@ -25,6 +26,11 @@ const tracks = [
   },
 ];
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' } }),
+};
+
 const Tracks = () => {
   return (
     <section id="tracks" className="relative w-full bg-slate-950 py-20 text-white">
@@ -37,11 +43,16 @@ const Tracks = () => {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {tracks.map((t) => {
+          {tracks.map((t, idx) => {
             const Icon = t.icon;
             return (
-              <div
+              <motion.div
                 key={t.title}
+                custom={idx}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={itemVariants}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/40"
               >
                 <div className={`absolute inset-0 opacity-0 transition group-hover:opacity-100 bg-gradient-to-br ${t.accent}`} />
@@ -52,7 +63,7 @@ const Tracks = () => {
                   <h3 className="mt-4 text-xl font-semibold">{t.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-white/80">{t.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
